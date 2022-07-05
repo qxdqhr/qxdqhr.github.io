@@ -16,23 +16,21 @@
   <meta name="author" content="qhr">
   <meta name="keywords" content="">
   
-    <meta name="description" content="OC中类的实际形态是如何的？ 类是以Class对象的形式存储在代码段之中. OC 中，一个类 被认为是 元类的对象  类名:存储的这个类的类名. NSString  方法存储在类对象之中.如何将方法存储在类对象之中. OC中的SEL是什么？ 叫做 selector 选择器 是一种变量类型，所以要在内存中申请空间存储数据. 转定义后，SEL本质是1个结构体.  SEL结构体变量用于存储消息.类似于函">
+    <meta name="description" content="皋月朔星的博客">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Objective-C-3-新特性">
-<meta property="og:url" content="https://qxdqhr.github.io/2022/07/04/Objective-C-3-%E6%96%B0%E7%89%B9%E6%80%A7-SEL%E6%B6%88%E6%81%AF/index.html">
+<meta property="og:title" content="皋月朔星的博客">
+<meta property="og:url" content="https://qxdqhr.github.io/2022/07/05/Objective-C-3-%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7-%E4%B8%87%E8%83%BD%E7%B1%BB%E5%9E%8B/index.html">
 <meta property="og:site_name" content="皋月朔星的博客">
-<meta property="og:description" content="OC中类的实际形态是如何的？ 类是以Class对象的形式存储在代码段之中. OC 中，一个类 被认为是 元类的对象  类名:存储的这个类的类名. NSString  方法存储在类对象之中.如何将方法存储在类对象之中. OC中的SEL是什么？ 叫做 selector 选择器 是一种变量类型，所以要在内存中申请空间存储数据. 转定义后，SEL本质是1个结构体.  SEL结构体变量用于存储消息.类似于函">
+<meta property="og:description" content="皋月朔星的博客">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://qxdqhr.github.io/Users/tiger/Desktop/hexo-blog/source/_posts/Objective-C-3-%E6%96%B0%E7%89%B9%E6%80%A7-SEL%E6%B6%88%E6%81%AF/1.png">
-<meta property="article:published_time" content="2022-07-04T13:22:11.000Z">
-<meta property="article:modified_time" content="2022-07-05T02:58:44.027Z">
+<meta property="article:published_time" content="2022-07-05T08:34:59.840Z">
+<meta property="article:modified_time" content="2022-07-05T08:39:03.385Z">
 <meta property="article:author" content="qhr">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://qxdqhr.github.io/Users/tiger/Desktop/hexo-blog/source/_posts/Objective-C-3-%E6%96%B0%E7%89%B9%E6%80%A7-SEL%E6%B6%88%E6%81%AF/1.png">
   
   
   
-  <title>Objective-C-3-新特性 - 皋月朔星的博客</title>
+  <title>皋月朔星的博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -197,7 +195,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Objective-C-3-新特性"></span>
+            <span id="subtitle" data-typed-text=""></span>
           
         </div>
 
@@ -208,8 +206,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-07-04 21:22" pubdate>
-          2022年7月4日 晚上
+        <time datetime="2022-07-05 16:34" pubdate>
+          2022年7月5日 下午
         </time>
       </span>
     
@@ -220,7 +218,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.2k 字
+          0 字
         
       </span>
     
@@ -231,7 +229,7 @@
         
         
         
-          10 分钟
+          1 分钟
         
       </span>
     
@@ -269,81 +267,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Objective-C-3-新特性</h1>
+            <h1 style="display: none"></h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="OC中类的实际形态是如何的？"><a href="#OC中类的实际形态是如何的？" class="headerlink" title="OC中类的实际形态是如何的？"></a>OC中类的实际形态是如何的？</h1><ul>
-<li>类是以Class对象的形式存储在代码段之中.</li>
-<li>OC 中，一个类 被认为是 元类的对象</li>
-</ul>
-<p>类名:存储的这个类的类名. NSString </p>
-<p>方法存储在类对象之中.如何将方法存储在类对象之中.</p>
-<h1 id="OC中的SEL是什么？"><a href="#OC中的SEL是什么？" class="headerlink" title="OC中的SEL是什么？"></a>OC中的SEL是什么？</h1><ul>
-<li>叫做 selector 选择器</li>
-<li>是一种变量类型，所以要在内存中申请空间存储数据.</li>
-<li>转定义后，SEL本质是1个结构体. </li>
-<li><strong>SEL结构体变量用于存储消息.类似于函数指针</strong><ul>
-<li>消息类似于方法，OC中调用方法一般被称为发送消息</li>
-</ul>
-</li>
-<li>使用SEL对象类发送消息 使编译器不会验证这个方法是否声明，直接向对象发送消息</li>
-<li>一般作为Class对象 的属性，用于将类方法存储到 Class对象 中</li>
-</ul>
-<h1 id="SEL应如何使用？"><a href="#SEL应如何使用？" class="headerlink" title="SEL应如何使用？"></a>SEL应如何使用？</h1><ul>
-<li>创建1个SEL对象，将方法的信息存储在这个SEL对象之中.</li>
-</ul>
- <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">SEL</span> <span class="hljs-variable">s1</span> <span class="hljs-operator">=</span> <span class="hljs-meta">@selector(方法名)</span>;<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>SEL使用时不需要加*</li>
-</ul>
-<p><img src="/Users/tiger/Desktop/hexo-blog/source/_posts/Objective-C-3-%E6%96%B0%E7%89%B9%E6%80%A7-SEL%E6%B6%88%E6%81%AF/1.png" srcset="/img/loading.gif" lazyload alt="image-20220703122856297"></p>
-<h1 id="OC中调用方法的内部原理是怎样的？"><a href="#OC中调用方法的内部原理是怎样的？" class="headerlink" title="OC中调用方法的内部原理是怎样的？"></a>OC中调用方法的内部原理是怎样的？</h1><ul>
-<li><p>现有这样一个方法，p1是Person类的对象，sayHi是其实例方法</p>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[p1 sayHi]</span><span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure></li>
-</ul>
-<ol>
-<li>获取到 sayHi 这一消息的 SEL 对象</li>
-<li>将这个SEL消息发送给p1对象，此时，p1对象接收到这个SEL消息以后 就知道要调用方法</li>
-<li>根据p1对象的isa指针寻找存储类Person（Class对象）</li>
-<li>找到这个类（Class对象）以后 在其中去搜寻是否有和传入的SEL数据相匹配的方法</li>
-<li>如果有 就执行  如果没有再向父类寻找 直到NSObject类，若都没有匹配的方法，则抛出异常</li>
-</ol>
-<h1 id="OC的重要机制-消息机制"><a href="#OC的重要机制-消息机制" class="headerlink" title="OC的重要机制:消息机制"></a>OC的重要机制:消息机制</h1><ul>
-<li>调用方法的本质其实就是向对象发送SEL消息.</li>
-<li>[p1 sayHi]; 向p1对象发送1条sayHi消息.</li>
-<li>重点掌握:<br>1).方法是以SEL对象的形式存储起来.<br>2).如何拿到存储方法的SEL对象：Class 对象获取</li>
-</ul>
-<h1 id="SEL消息的其他用法？"><a href="#SEL消息的其他用法？" class="headerlink" title="SEL消息的其他用法？"></a>SEL消息的其他用法？</h1><h2 id="手动发送消息"><a href="#手动发送消息" class="headerlink" title="手动发送消息"></a>手动发送消息</h2><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs erlang">调用对象的方法 将SEL数据发送给对象.<br>- <span class="hljs-params">(id)</span>performSelector:<span class="hljs-params">(SEL)</span>aSelector;<br></code></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java">Person *p1 = [Person <span class="hljs-keyword">new</span>];<br><span class="hljs-type">SEL</span> <span class="hljs-variable">s1</span> <span class="hljs-operator">=</span> <span class="hljs-meta">@selector(sayHi)</span>; <span class="hljs-comment">//先得到方法的SEL数据.</span><br>[p1 performSelector:s1];  <span class="hljs-comment">// 将这个SEL消息发送给p1对象，与 [p1 sayHi]效果是完全一样的.</span><br></code></pre></td></tr></table></figure>
-
-<h1 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项:"></a>注意事项:</h1><ol>
-<li>使用 SEL 对象时，如果方法有参数 那么方法名是带了冒号的 <ol>
-<li>@selector(sayHi:);</li>
-</ol>
-</li>
-<li>如果方法有参数就调用如下方法:</li>
-</ol>
-<ul>
-<li>(id)performSelector:(SEL)aSelector withObject:(id)object;</li>
-<li>(id)performSelector:(SEL)aSelector withObject:(id)object1 withObject:(id)object2;</li>
-</ul>
-<h1 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h1><ol>
-<li><p>类是以Class对象的形式存储在代码段.</p>
-</li>
-<li><p>如何取到存储类的类对象.</p>
-</li>
-<li><p>如何使用类对象调用类的类方法 </p>
-</li>
-<li><p>方法是以SEL数据的形式存储的.</p>
-</li>
-<li><p>调用方法的两种方式.</p>
-</li>
-</ol>
-
+                
                 
               </div>
             
@@ -360,8 +289,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Objective-C-3-新特性</div>
-      <div>https://qxdqhr.github.io/2022/07/04/Objective-C-3-新特性-SEL消息/</div>
+      <div></div>
+      <div>https://qxdqhr.github.io/2022/07/05/Objective-C-3-语言特性-万能类型/</div>
     </div>
     <div class="license-meta">
       
@@ -373,7 +302,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年7月4日</div>
+          <div>2022年7月5日</div>
         </div>
       
       
@@ -407,8 +336,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/07/04/Objective-C-3-%E6%96%B0%E7%89%B9%E6%80%A7-getter-setter/" title="Objective-C-3-getter-setter">
-                        <span class="hidden-mobile">Objective-C-3-getter-setter</span>
+                      <a href="/2022/07/04/Objective-C-3-%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7-SEL%E6%B6%88%E6%81%AF/" title="Objective-C-3-语言特性-SEL消息">
+                        <span class="hidden-mobile">Objective-C-3-语言特性-SEL消息</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
