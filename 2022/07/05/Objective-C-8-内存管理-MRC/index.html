@@ -16,21 +16,21 @@
   <meta name="author" content="qhr">
   <meta name="keywords" content="">
   
-    <meta name="description" content="皋月朔星的博客">
+    <meta name="description" content="MRC 和 ARC 是什么意思? MRC: Manual Reference Counting 手动引用计数.手动内存管理.  要求程序员手动的管理内存(发送retain消息 或 relase消息) 早期的APP开发使用的MRC技术   ARC: Automatic Reference Counting 自动引用计数.自动内存管理  系统自动的在合适的地方发送retain relase消息 ARC">
 <meta property="og:type" content="article">
-<meta property="og:title" content="1">
-<meta property="og:url" content="https://qxdqhr.github.io/2022/07/05/Objective-C-8/index.html">
+<meta property="og:title" content="Objective-C-8-内存管理-MRC">
+<meta property="og:url" content="https://qxdqhr.github.io/2022/07/05/Objective-C-8-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-MRC/index.html">
 <meta property="og:site_name" content="皋月朔星的博客">
-<meta property="og:description" content="皋月朔星的博客">
+<meta property="og:description" content="MRC 和 ARC 是什么意思? MRC: Manual Reference Counting 手动引用计数.手动内存管理.  要求程序员手动的管理内存(发送retain消息 或 relase消息) 早期的APP开发使用的MRC技术   ARC: Automatic Reference Counting 自动引用计数.自动内存管理  系统自动的在合适的地方发送retain relase消息 ARC">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-07-05T09:17:10.000Z">
-<meta property="article:modified_time" content="2022-07-05T09:17:10.829Z">
+<meta property="article:modified_time" content="2022-07-06T13:13:25.667Z">
 <meta property="article:author" content="qhr">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>1 - 皋月朔星的博客</title>
+  <title>Objective-C-8-内存管理-MRC - 皋月朔星的博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -195,7 +195,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="1"></span>
+            <span id="subtitle" data-typed-text="Objective-C-8-内存管理-MRC"></span>
           
         </div>
 
@@ -218,7 +218,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          0 字
+          2.6k 字
         
       </span>
     
@@ -229,7 +229,7 @@
         
         
         
-          1 分钟
+          22 分钟
         
       </span>
     
@@ -267,12 +267,157 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">1</h1>
+            <h1 style="display: none">Objective-C-8-内存管理-MRC</h1>
             
             
               <div class="markdown-body">
                 
-                
+                <h1 id="MRC-和-ARC-是什么意思"><a href="#MRC-和-ARC-是什么意思" class="headerlink" title="MRC 和 ARC 是什么意思?"></a>MRC 和 ARC 是什么意思?</h1><ul>
+<li><p>MRC: Manual Reference Counting 手动引用计数.手动内存管理.</p>
+<ul>
+<li>要求程序员手动的管理内存(发送retain消息 或 relase消息)</li>
+<li>早期的APP开发使用的MRC技术</li>
+</ul>
+</li>
+<li><p>ARC: Automatic Reference Counting 自动引用计数.自动内存管理</p>
+<ul>
+<li>系统自动的在合适的地方发送retain relase消息</li>
+<li>ARC是基于MRC</li>
+<li>iOS5开始. Xcode4.2开始就支持ARC,Xcode7 默认支持ARC开发</li>
+</ul>
+</li>
+</ul>
+<h1 id="引用计数器是什么"><a href="#引用计数器是什么" class="headerlink" title="引用计数器是什么?"></a>引用计数器是什么?</h1><ul>
+<li>为了让系统知道何时需要将某个对象所占用的内存清理掉,系统引入了引用计数器的概念</li>
+<li>每个对象都有1个叫做retainCount的属性</li>
+<li>这一属性叫做引用计数器</li>
+<li>类型是unsigned long 占据8个字节</li>
+</ul>
+<h2 id="引用计数器有什么作用"><a href="#引用计数器有什么作用" class="headerlink" title="引用计数器有什么作用?"></a>引用计数器有什么作用?</h2><ul>
+<li>记录当前对象有多少个人在使用它.   </li>
+<li>默认情况下,创建1个对象后,其引用计数器的默认值是1</li>
+<li>当多1个人使用这个对象的时候.应该先让这个对象的引用计数器的值+1 代表这个对象多1个人使用.</li>
+<li>当这个对象少1个人使用的时候.应该先让这个对象的引用计数器的值-1 代表这个对象少1个人使用.</li>
+<li>当这个对象的引用计数器变为0的时候.代表这个对象无人使用. 这个时候系统就会自动回收这个对象.</li>
+</ul>
+<h2 id="如何操作引用计数器"><a href="#如何操作引用计数器" class="headerlink" title="如何操作引用计数器?"></a>如何操作引用计数器?</h2><ul>
+<li>每多1个人使用对象时,为对象发送1条retain消息. 对象的引用计数器就会加1</li>
+<li>每少1个人使用对象的时候,为对象发送1条release消息.对象的引用计数器就会减1</li>
+<li>为对象发送1条retainCount消息. 就可以获取到对象的引用计数器的值</li>
+<li>就这样++ – 当对象的引用计数器变为0的时候,对象就会被系统立即回收,并自动调用对象的dealloc方法.</li>
+</ul>
+<h2 id="重写dealloc方法的规范"><a href="#重写dealloc方法的规范" class="headerlink" title="重写dealloc方法的规范:"></a>重写dealloc方法的规范:</h2><ul>
+<li>必须要调用父类的dealloc方法. 并且要放在最后一句代码.</li>
+</ul>
+<h1 id="野指针是什么"><a href="#野指针是什么" class="headerlink" title="野指针是什么?"></a>野指针是什么?</h1><ul>
+<li><p>OC中的野指针: </p>
+</li>
+<li><p>指针指向的对象已经被回收</p>
+</li>
+<li><p>C语言中的野指针: </p>
+</li>
+<li><p>定义1个指针变量且没有初始化</p>
+</li>
+<li><p>这个指针变量的值指向1块随机的空间</p>
+</li>
+</ul>
+<h1 id="对象回收的是怎样的"><a href="#对象回收的是怎样的" class="headerlink" title="对象回收的是怎样的?"></a>对象回收的是怎样的?</h1><ul>
+<li>回收对象后,对象占用的空间可以分配给别人</li>
+<li>当这个对象占用的内存空间没有分配给别人之前 其实对象数据还在</li>
+</ul>
+<h2 id="内存回收的本质是怎样的"><a href="#内存回收的本质是怎样的" class="headerlink" title="内存回收的本质是怎样的?"></a>内存回收的本质是怎样的?</h2><ul>
+<li>申请1个变量,实际上就是向系统申请指定字节数的空间.这些空间系统就不会再分配给别人了.</li>
+<li>当变量被回收的时候,代表变量占用的字节空间从此以后系统可以分配给别人使用了.</li>
+<li>但此时字节空间中存储的数据还在.</li>
+</ul>
+<h1 id="僵尸对象是什么"><a href="#僵尸对象是什么" class="headerlink" title="僵尸对象是什么?"></a>僵尸对象是什么?</h1><ul>
+<li><p>已经被释放的对象,但是这个对象所占的空间还没有分配给别人.这样的对象叫做僵尸对象.</p>
+</li>
+<li><p>通过野指针去访问僵尸对象的时候:</p>
+<ul>
+<li>当僵尸对象占用的空间还没有分配给别人的时候.这是可以的</li>
+<li>当僵尸对象占用的空间分配给了别人使用的时候 就不可以</li>
+<li>因此,只要对象称为了僵尸对象,无论如何 都不允许访问</li>
+</ul>
+</li>
+<li><p>编译器支持 僵尸对象的实时检查机制 </p>
+<ul>
+<li>打开之后 只要访问的是僵尸对象,无论空间是否分配 就会报错</li>
+<li>但默认状态下僵尸对象检测,不会打开,由于僵尸对象检测打开后,每访问1个对象 都会先检查这个对象是否为僵尸对象,极其消耗性能</li>
+</ul>
+</li>
+<li><p>释放过的僵尸对象不能动态回复</p>
+</li>
+</ul>
+<h1 id="如何避免野指针访问僵尸对象"><a href="#如何避免野指针访问僵尸对象" class="headerlink" title="如何避免野指针访问僵尸对象?"></a>如何避免野指针访问僵尸对象?</h1><ul>
+<li><p>当1个指针的空间被回收后,将这个指针的值设置nil</p>
+</li>
+<li><p>nil指针调用对象的方法(包括使用点语法)时,不会报错. 只是没有任何反应</p>
+<ul>
+<li>但nil 指针不能直接访问属性,会报错.</li>
+</ul>
+</li>
+</ul>
+<h1 id="内存泄露是什么意思"><a href="#内存泄露是什么意思" class="headerlink" title="内存泄露是什么意思?"></a>内存泄露是什么意思?</h1><ul>
+<li>指的是1个对象没有被及时的回收.会一直驻留在内存中,直到程序结束的时候才回收</li>
+<li>这种内存空间,既不能被使用,也不能被回收,不能再被访问到,使得进程中可利用的内存变少,所以被称为内存泄漏</li>
+</ul>
+<h2 id="单个对象会在什么时候发生内存泄露"><a href="#单个对象会在什么时候发生内存泄露" class="headerlink" title="单个对象会在什么时候发生内存泄露?"></a>单个对象会在什么时候发生内存泄露?</h2><ul>
+<li><p>有对象的创建,而没有对应的relase</p>
+</li>
+<li><p>retain的次数和relase的次数不匹配</p>
+</li>
+<li><p>在不适当的时候,为指针赋值为nil</p>
+</li>
+<li><p>在方法中为传入的对象进行不适当的retain</p>
+</li>
+</ul>
+<h2 id="如何保证单个对象可以被回收-规避内存泄漏"><a href="#如何保证单个对象可以被回收-规避内存泄漏" class="headerlink" title="如何保证单个对象可以被回收,规避内存泄漏?"></a>如何保证单个对象可以被回收,规避内存泄漏?</h2><ul>
+<li><p>有对象的创建 就必须要匹配1个relase</p>
+</li>
+<li><p>retain次数和release次数一定要匹配</p>
+</li>
+<li><p>只有在指针称为野指针的时候才赋值为nil</p>
+</li>
+<li><p>在方法中布要随意的为传入的对象retain</p>
+</li>
+</ul>
+<h1 id="MRC-模式下-当属性为OC对象时-setter方法的写法"><a href="#MRC-模式下-当属性为OC对象时-setter方法的写法" class="headerlink" title="MRC 模式下,当属性为OC对象时,setter方法的写法"></a>MRC 模式下,当属性为OC对象时,setter方法的写法</h1><ul>
+<li><p>对象一般都放置在堆区,因此以对象作为属性时,也要遵守 MRC 手动回收内存的原则</p>
+</li>
+<li><p>将参数赋值给当前对象的属性,代表</p>
+<ul>
+<li>属性原值要被删除:	原对象需要先释放	为原对象发送一个 release 消息</li>
+<li>属性新值需要被存储:	参数对象要被存储	为参数对象发送一个 retain 消息 </li>
+<li>属性新值赋值:	将参数对象赋值到类属性中</li>
+</ul>
+</li>
+<li><p>当对象销毁时,代表属性指向的对象应被释放. 就应该在dealloc中relase</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs objective-c">- (void)setCar:(Car *)car<br>&#123;<br>		[_car release];<br>		_car = [car retain];<br>&#125;<br>- (void)dealloc //MRC 下需要重写dealloc,手动释放内存<br>&#123;<br>    [_car release];<br>    [super dealloc];<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h1 id="循环引用是什么意思"><a href="#循环引用是什么意思" class="headerlink" title="循环引用是什么意思?"></a>循环引用是什么意思?</h1><ul>
+<li>当两个类相互包含时,会出现循环引用的问题. 会造成无限递归,而导致无法编译通过<ul>
+<li>Person.h 中 包含(#import) Book.h 同时 Book.h 中 包含(#import) Person.h</li>
+</ul>
+</li>
+</ul>
+<h2 id="如何打破循环引用"><a href="#如何打破循环引用" class="headerlink" title="如何打破循环引用?"></a>如何打破循环引用?</h2><ol>
+<li>将 A.h 中的 #import “B.h” 更换为 @class B; </li>
+<li>在 A.m 文件中 添加  #import “B.h”</li>
+</ol>
+<h1 id="class与-import的区别"><a href="#class与-import的区别" class="headerlink" title="@class与#import的区别?"></a>@class与#import的区别?</h1><ul>
+<li>#import是将指定的文件的内容拷贝到写指令的地方</li>
+<li>@class 并不会拷贝任何内容. 而是令编译器在编译的时候才可以知道xxx是1个类,防止循环引用的产生</li>
+</ul>
+<h1 id="MRC-标准的代码如下"><a href="#MRC-标准的代码如下" class="headerlink" title="MRC 标准的代码如下:"></a>MRC 标准的代码如下:</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs objective-c">//---Person.h<br>#import &lt;Foundation/Foundation.h&gt;<br>@interface Person : NSObject<br>&#123;<br>    //NSString *_name;<br>&#125;<br>//- (void)setName:(NSString *)name;<br>//- (NSString *)name;<br>@property(nonatomic,assign)NSString *name;<br><br>@end<br><br>//---Person.m<br>#import &quot;Person.h&quot;<br>@implementation Person<br><br>- (void)dealloc<br>&#123;<br>    [_name release]; //释放掉属性<br>    [super dealloc]; //调用父类 dealloc<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
                 
               </div>
             
@@ -289,8 +434,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>1</div>
-      <div>https://qxdqhr.github.io/2022/07/05/Objective-C-8/</div>
+      <div>Objective-C-8-内存管理-MRC</div>
+      <div>https://qxdqhr.github.io/2022/07/05/Objective-C-8-内存管理-MRC/</div>
     </div>
     <div class="license-meta">
       
@@ -342,8 +487,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/07/05/Objective-C-7-IOS%20%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-MRC/" title="1">
-                        <span class="hidden-mobile">1</span>
+                      <a href="/2022/07/05/Objective-C-5-%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7-%E4%B8%87%E8%83%BD%E7%B1%BB%E5%9E%8B/" title="Objective-C-5-语言特性-万能类型">
+                        <span class="hidden-mobile">Objective-C-5-语言特性-万能类型</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

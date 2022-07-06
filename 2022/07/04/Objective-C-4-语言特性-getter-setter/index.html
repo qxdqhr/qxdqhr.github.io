@@ -24,7 +24,7 @@
 <meta property="og:description" content="OC中是如何访问对象的属性的? OC中可以使用点语法来访问对象的属性  语法如下所示:   123&#x2F;&#x2F;对象名.去掉下划线的属性名;p1.name &#x3D; @&quot;jack&quot;; &#x2F;&#x2F;这个时候就会将@&quot;jack&quot;赋值给p1对象的_name属性.NSString *name &#x3D; p1.name; &#x2F;&#x2F;把p1对象的_name属性的值取出来   但,OC的对象如果要为属性赋值">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-07-04T13:22:11.000Z">
-<meta property="article:modified_time" content="2022-07-05T09:20:17.633Z">
+<meta property="article:modified_time" content="2022-07-06T13:06:21.445Z">
 <meta property="article:author" content="qhr">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -218,7 +218,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.1k 字
+          4.5k 字
         
       </span>
     
@@ -229,7 +229,7 @@
         
         
         
-          26 分钟
+          38 分钟
         
       </span>
     
@@ -397,21 +397,117 @@
 </li>
 </ol>
 <h1 id="新版本-porperty的注意要点有哪些"><a href="#新版本-porperty的注意要点有哪些" class="headerlink" title="新版本@porperty的注意要点有哪些?"></a>新版本@porperty的注意要点有哪些?</h1><ul>
-<li>@property的类型对应类成员属性类型</li>
-<li>@property的名称对应类成员属性的去掉下划线后的属性名</li>
-<li>新版本的@property也支持相同类型的批量声明</li>
-<li>新版本的@property生成的方法实现也没有做任何逻辑验证</li>
-<li>自定义验证逻辑时<ul>
+<li><p>@property的类型对应类成员属性类型</p>
+</li>
+<li><p>@property的名称对应类成员属性的去掉下划线后的属性名</p>
+</li>
+<li><p>新版本的@property也支持相同类型的批量声明</p>
+</li>
+<li><p>新版本的@property生成的方法实现也没有做任何逻辑验证</p>
+</li>
+<li><p>自定义验证逻辑时</p>
+<ul>
 <li>如果重写了setter 还会自动生成getter</li>
 <li>如果重写了getter 还会自动生成setter </li>
 <li>如果同时重写getter setter 那么就不会自动生成私有属性了,需要手动向类中添加属性</li>
 </ul>
 </li>
-<li>父类的@property一样可以被子类继承</li>
-<li>@property生成的属性是私有的 在子类的内部无法直接访问,但可通过setter getter来访问</li>
+<li><p>父类的@property一样可以被子类继承</p>
+</li>
+<li><p>@property生成的属性是私有的 在子类的内部无法直接访问,但可通过setter getter来访问    </p>
+</li>
+<li><p>生成的setter方法的实现中,无论是什么类型的,都是直接赋值</p>
+<ul>
+<li>若设定为 MRC 时,setter 和 dealloc 方法中对对象的复制与释放的都需要手动完成</li>
+</ul>
+</li>
+</ul>
+<h1 id="新版本-property中参数有哪些"><a href="#新版本-property中参数有哪些" class="headerlink" title="新版本@property中参数有哪些?"></a>新版本@property中参数有哪些?</h1><ul>
+<li><p>语法:</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs objectivec"><span class="hljs-keyword">@property</span>(atomic,<span class="hljs-keyword">assign</span>,<span class="hljs-keyword">readwrite</span>,<span class="hljs-keyword">getter</span> = <span class="hljs-keyword">getter</span>方法名字,<span class="hljs-keyword">setter</span> = <span class="hljs-keyword">setter</span>方法名字:)数据类型 名称;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>按照使用功能来划分,@property有四组参数:</p>
+</li>
+</ul>
+<h2 id="多线程相关"><a href="#多线程相关" class="headerlink" title="多线程相关"></a>多线程相关</h2><pre><code class="hljs"> ### atomic
+</code></pre>
+<ul>
+<li>默认值</li>
+<li>如果写atomic,这个时候生成的setter方法的代码就会被加上一把线程安全锁.</li>
+<li>特点: 安全、效率低下.</li>
+</ul>
+<h3 id="nonatomic"><a href="#nonatomic" class="headerlink" title="nonatomic"></a>nonatomic</h3><ul>
+<li><p>如果写nonatomic 这个时候生成的setter方法的代码就不会加线程安全锁.</p>
+</li>
+<li><p>特点: 不安全,但是效率高.</p>
+<p> 建议: 要效率. 选择使用nonatomic 在没有讲解多线程的知识以前 统统使用nonatomic</p>
+</li>
+</ul>
+<h2 id="生成的setter方法的实现相关"><a href="#生成的setter方法的实现相关" class="headerlink" title="生成的setter方法的实现相关"></a>生成的setter方法的实现相关</h2><h3 id="assign"><a href="#assign" class="headerlink" title="assign"></a>assign</h3><ul>
+<li>默认值 </li>
+<li>生成的setter方法的实现就是直接赋值</li>
+<li>当属性的类型是非OC对象的时候,使用assign</li>
+</ul>
+<h3 id="retain"><a href="#retain" class="headerlink" title="retain"></a>retain</h3><ul>
+<li>生成的setter方法的实现就是标准的MRC内存管理代码<ul>
+<li>先判断新旧对象是否为同1个对象 如果不是 release旧的  retain新的</li>
+<li>仍需要手动的在dealloc中release</li>
+</ul>
+</li>
+<li>当属性的类型是OC对象类型的时候,那么就使用retain</li>
+</ul>
+<h2 id="生成只读、读写的属性相关"><a href="#生成只读、读写的属性相关" class="headerlink" title="生成只读、读写的属性相关"></a>生成只读、读写的属性相关</h2><h3 id="readwrite"><a href="#readwrite" class="headerlink" title="readwrite"></a>readwrite</h3><ul>
+<li>默认值</li>
+<li>代表同时生成getter setter</li>
+</ul>
+<h3 id="readonly"><a href="#readonly" class="headerlink" title="readonly"></a>readonly</h3><ul>
+<li>只会生成getter 不会生成setter</li>
+</ul>
+<h2 id="生成的getter-setter方法名字相关"><a href="#生成的getter-setter方法名字相关" class="headerlink" title="生成的getter setter方法名字相关"></a>生成的getter setter方法名字相关</h2><ul>
+<li>通过@property生成的getter setter方法名都是符合标准的<ul>
+<li>但也可通过参数来	指定@property生成的方法名</li>
+</ul>
+</li>
+<li>使用getter setter修改了生成的方法名,使用点语法时,编译器会展示修改后的方法名</li>
+</ul>
+<h3 id="getter-x3D-getter方法名字"><a href="#getter-x3D-getter方法名字" class="headerlink" title="(getter &#x3D; getter方法名字)"></a>(getter &#x3D; getter方法名字)</h3><ul>
+<li>用来指定@property生成的getter方法的名字</li>
+</ul>
+<h4 id="何时修改getter方法名"><a href="#何时修改getter方法名" class="headerlink" title="何时修改getter方法名?"></a>何时修改getter方法名?</h4><ul>
+<li>当属性为BOOL类型时,就修改getter的方法名以is开头 提高代码的阅读性.</li>
+</ul>
+<h3 id="setter-x3D-setter方法名字"><a href="#setter-x3D-setter方法名字" class="headerlink" title="(setter &#x3D; setter方法名字:)"></a>(setter &#x3D; setter方法名字:)</h3><ul>
+<li><p>用来指定@property生成的setter方法的名字</p>
+</li>
+<li><p>setter方法是带参数的 所以要加1个冒号</p>
+</li>
+<li><p>一般无需修改setter方法的名字,默认情况下生成的名字就是标准方法名</p>
+</li>
+</ul>
+<h1 id="当两个对象的属性值相互引用时-出现内存泄漏"><a href="#当两个对象的属性值相互引用时-出现内存泄漏" class="headerlink" title="当两个对象的属性值相互引用时,出现内存泄漏?"></a>当两个对象的属性值相互引用时,出现内存泄漏?</h1><ul>
+<li>A对象中包含B类型属性b1; B对象中包含A类型属性a1;</li>
+<li>此时,若这两个属性的@property 参数中均使用retain 那么就会发生内存泄露</li>
+</ul>
+<h2 id="原因"><a href="#原因" class="headerlink" title="原因:"></a>原因:</h2><ul>
+<li>互相持有导致A,B 对象的引用计数在 release 时都没有变为 0,两个对象都 不会调用 dealloc 方法</li>
+</ul>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案:"></a>解决方案:</h2><ul>
+<li>令A中的b1属性的@property 参数使用assign </li>
+<li>A类中的dealloc中不需 release b1 对象</li>
+<li>A:b1 可换为 B:a1</li>
+</ul>
+<h3 id="原因-1"><a href="#原因-1" class="headerlink" title="原因:"></a>原因:</h3><ul>
+<li>assign 是直接赋值,不进行 release,retain操作</li>
+<li>在进行相互引用时,拥有 assign属性 的对象 A 的引用计数就只会+1</li>
+<li>因此在两个对象被回收时,B 对象的引用计数一定先到 0,进而调用自己的 dealloc 函数,从而 release 掉 A</li>
 </ul>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结:"></a>总结:</h1><ul>
 <li>如果你想为类写1个属性 并且为这个属性封装getter setter, 使用@property就搞定,不需要再使用@synthesize</li>
+<li>对于一个属性的@property的参数;<ul>
+<li>同组参数只能使用1个(getter&#x2F;setter 方法名除外)</li>
+<li>参数的顺序可以随意</li>
+</ul>
+</li>
 </ul>
 
                 

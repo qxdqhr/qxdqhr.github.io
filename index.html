@@ -225,6 +225,39 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2022/07/06/Swift/" target="_self">
+          
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/06/Swift/" target="_self">
+        <div>
+          除了使用函数做为获取接口的方法外,在swift中给出了private(set)申明的方式来限制外部对属性的修改.但在当前文件中依然可改. 1private(set) var name : String?
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-07-06 16:41" pubdate>
+              2022-07-06
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2022/07/05/Objective-C-9/" target="_self">
           1
         </a>
@@ -258,48 +291,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/07/05/Objective-C-8/" target="_self">
-          1
+        <a href="/2022/07/05/Objective-C-8-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-MRC/" target="_self">
+          Objective-C-8-内存管理-MRC
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/05/Objective-C-8/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/05/Objective-C-8-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-MRC/" target="_self">
         <div>
-          
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-07-05 17:17" pubdate>
-              2022-07-05
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/07/05/Objective-C-7-IOS%20%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-MRC/" target="_self">
-          1
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/05/Objective-C-7-IOS%20%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-MRC/" target="_self">
-        <div>
-          
+          MRC 和 ARC 是什么意思? MRC: Manual Reference Counting 手动引用计数.手动内存管理.  要求程序员手动的管理内存(发送retain消息 或 relase消息) 早期的APP开发使用的MRC技术   ARC: Automatic Reference Counting 自动引用计数.自动内存管理  系统自动的在合适的地方发送retain relase消息 ARC
         </div>
       </a>
 
@@ -342,6 +342,39 @@
             <i class="iconfont icon-date"></i>
             <time datetime="2022-07-05 16:00" pubdate>
               2022-07-05
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/07/04/Objective-C-2-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" target="_self">
+          Objective-C-2-面向对象
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/04/Objective-C-2-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" target="_self">
+        <div>
+          如何定义一个 OC类？ 类的定义分为两个部分：类的声明&#x2F;实现  类的声明：一般写在.h文件中 123456@inteface 类名 : NSObject&amp;#123;		类成员变量声明&amp;#125;方法的声明写在这里@end  类的属性名 必须要以下划线开头  类的实现：一般写在.m文件中 12345@implementation 类名      将方法的实现写在这里@end  如何创建 O
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-07-04 21:22" pubdate>
+              2022-07-04
             </time>
           </div>
         
@@ -431,40 +464,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/07/04/Objective-C-6-%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7-%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95/" target="_self">
         <div>
-          \1. 创建对象,我们之前说: ​         类名 *指针名 &#x3D; [类名 new];    new实际上是1个类方法.    new方法的作用:    -&gt; 创建对象。    -》 初始化对象    -&gt; 把对象的地址返回.    new方法的内部,其实是先调用的alloc方法. 再调用的init方法.    alloc方法是1个类方法,作用: 那1个类调用这个方法
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-07-04 21:22" pubdate>
-              2022-07-04
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/07/04/Objective-C-2-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" target="_self">
-          Objective-C-2-面向对象
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/04/Objective-C-2-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" target="_self">
-        <div>
-          如何定义一个 OC类？ 类的定义分为两个部分：类的声明&#x2F;实现  类的声明：一般写在.h文件中 123456@inteface 类名 : NSObject&amp;#123;		类成员变量声明&amp;#125;方法的声明写在这里@end  类的属性名 必须要以下划线开头  类的实现：一般写在.m文件中 12345@implementation 类名      将方法的实现写在这里@end  如何创建 O
+          new 方法是什么? 用于创建对象  new实际上是1个类方法 其中进行的操作:  创建对象:调用的alloc方法  alloc 方法:分配空间并创建对应类的对象   初始化对象:	调用的init方法  返回对象地址    使用未经初始化的对象是极其危险的.千万不要这么做.    123Person *p1 &#x3D; [Person new]; &#x2F;&#x2F;  类名 *指针名 &#x3D; [类名 new];&#x2F;&#x2F;完全等价
         </div>
       </a>
 
