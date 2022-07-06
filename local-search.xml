@@ -43,6 +43,19 @@
   
   
   <entry>
+    <title>Objective-C-7-内存管理-概述</title>
+    <link href="/2022/07/05/Objective-C-7-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E6%A6%82%E8%BF%B0/"/>
+    <url>/2022/07/05/Objective-C-7-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E6%A6%82%E8%BF%B0/</url>
+    
+    <content type="html"><![CDATA[<h1 id="内存管理是什么意思"><a href="#内存管理是什么意思" class="headerlink" title="内存管理是什么意思?"></a>内存管理是什么意思?</h1><ul><li><p>内存的作用:存储数据 ,也就是代码中的变量</p></li><li><p>当数据(变量&#x2F;对象)不再被使用的时候,占用的内存空间如何被释放</p></li></ul><h1 id="Objective-C-中-内存管理-解决了什么问题"><a href="#Objective-C-中-内存管理-解决了什么问题" class="headerlink" title="Objective-C 中 内存管理 解决了什么问题?"></a>Objective-C 中 内存管理 解决了什么问题?</h1><ul><li>防止野指针的生成 （野指针：指向变量的指针还存在，但是所指向的内存已经被释放，此时的指针就变成了野指针 – 没有指向 <em>“ 内容 ”</em> 的指针）</li><li>防止出现内存泄漏 （内存泄漏：指向内存空间的指针已经被释放，但是该指针指向的内存空间还在内存中存在（被占用） – 没有 <em>“ 地址 ”</em> 的内存）</li><li>合理使用内存，防止有限内存的大量消耗</li></ul><h1 id="内存中的五大区域"><a href="#内存中的五大区域" class="headerlink" title="内存中的五大区域"></a>内存中的五大区域</h1><ul><li>栈、BSS段、数据段、代码段存储在它们中的数据的回收由系统自动完成</li><li>分配在堆区中的OC对象,系统不会自动回收,直到程序结束的时候才会被回收.</li></ul><h2 id="栈"><a href="#栈" class="headerlink" title="栈:"></a>栈:</h2><ul><li>局部变量. 当局部变量的作用域被执行完毕之后,这个局部变量就会被系统立即回收.</li></ul><h2 id="堆"><a href="#堆" class="headerlink" title="堆:"></a>堆:</h2><ul><li>OC对象,使用C函数申请的空间</li></ul><h2 id="BSS段"><a href="#BSS段" class="headerlink" title="BSS段:"></a>BSS段:</h2><ul><li>未初始化的全局变量、静态变量. 一旦初始化就回收 并转存到数据段之中.</li></ul><h2 id="数据段"><a href="#数据段" class="headerlink" title="数据段:"></a>数据段:</h2><ul><li>已经初始化的全局变量、静态变量. 直到程序结束的时候才会被回收.</li></ul><h2 id="代码段"><a href="#代码段" class="headerlink" title="代码段:"></a>代码段:</h2><ul><li>代码. 程序结束的时候,系统会自动回收存储在代码段中的数据.</li></ul><h1 id="iPhone-内存机制是怎样的-旧"><a href="#iPhone-内存机制是怎样的-旧" class="headerlink" title="iPhone 内存机制是怎样的?(旧)"></a>iPhone 内存机制是怎样的?(旧)</h1><ul><li>40M 警告</li><li>45M 警告</li><li>120M 闪退.</li></ul><h1 id="内存管理的范围"><a href="#内存管理的范围" class="headerlink" title="内存管理的范围:"></a>内存管理的范围:</h1><ul><li>只需管理存储在堆中的OC对象的回收</li><li>其他区域中的数据由系统自动管理.</li></ul><h1 id="对象应该什么时候被回收"><a href="#对象应该什么时候被回收" class="headerlink" title="对象应该什么时候被回收?"></a>对象应该什么时候被回收?</h1><ul><li>对象被使用时,不能回收</li><li>对象未被使用时,才可回收</li></ul>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Objective-C-5-语言特性-万能类型</title>
     <link href="/2022/07/05/Objective-C-5-%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7-%E4%B8%87%E8%83%BD%E7%B1%BB%E5%9E%8B/"/>
     <url>/2022/07/05/Objective-C-5-%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7-%E4%B8%87%E8%83%BD%E7%B1%BB%E5%9E%8B/</url>
